@@ -1,39 +1,43 @@
+using System;
 using System.Collections.Generic;
 
 namespace quest
 {
     class World
     {
-        public List<Character> Characters { get; set; } = new List<Character>();
-        public Player Player { get; set; }
-
-        public void Init()
+        private static World instance;
+        public static World Instance
         {
-
+            get
+            {
+                if (instance == null)
+                    instance = new World();
+                return instance;
+            }
         }
+
+        List<Room> rooms = new List<Room>();
+        List<Character> characters = new List<Character>();
+        public Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
 
         public void Update()
         {
-            foreach (var item in Characters)
-                Process(item);
-            Player.Poll();
+            foreach (var item in characters)
+                item.Commands.Dequeue();
         }
 
-        private void Process(Character c)
+        public void Setup<T>(T obj) where T : GameObject
         {
-            if (c.Actions.Count == 0)
-                return;
+            if (obj is Room)
+                rooms.Add(obj as Room);
+            else if (obj is Character)
+                characters.Add(obj as Character);
+        }
 
-            string command = c.Actions.Dequeue();
-
-            switch (command)
-            {
-                case "look":
-                    {
-                        System.Console.WriteLine(c.Room.Description);
-                        break;
-                    }
-            }
+        public bool TryFindCharacter(string name, out Character character)
+        {
+            character = characters.Find(x => x.Title == name);
+            return character == null;
         }
     }
 }
