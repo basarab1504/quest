@@ -1,16 +1,22 @@
 namespace quest
 {
-    //задача команды - использовать инструменты Мира, чтобы создать корректные аргументы и проверить возможность выполнения команды
     class LookCommand : ICommand
     {
-        public void Execute(Character character, string[] args)
+        public void Execute(GameObject invoker, string command)
         {
-            if (character.behaviors.ContainsKey(typeof(LookBehavior)))
+            if (invoker.TryGet<SightBehavior>(out SightBehavior behavior))
             {
-                character.behaviors[typeof(LookBehavior)].Execute();
+                var splitted = command.Split();
+                string lookAt = splitted[1];
+
+                if (World.Instance.TryGet(lookAt, out GameObject gameObject))
+                    behavior.Process(new LookCommandArgs() { Invoker = invoker, LookAt = gameObject });
             }
-            else
-                System.Console.WriteLine("You can't see.");
         }
+    }
+
+    class LookCommandArgs : CommandArgs
+    {
+        public GameObject LookAt { get; set; }
     }
 }

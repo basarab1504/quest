@@ -1,21 +1,27 @@
-﻿using System;
-
-namespace quest
+﻿namespace quest
 {
     class Program
     {
         static void Main(string[] args)
         {
-            World.Instance.commands.Add("say", new SayCommand());
-            World.Instance.commands.Add("look", new LookCommand());
+            var room = World.Instance.Create<GameObject>();
+            room.Title = "Road";
+            room.Description = "Dustry old road";
 
-            var room = new RoadRoomFactory().Make();
-            var player = new PlayerFactory().Make();
-            var hobo = new HoboFactory().Make();
+            var player = World.Instance.Create<GameObject>();
+            World.Instance.TryAdd<PlayerBehavior>(player);
+            World.Instance.TryAdd<SightBehavior>(player);
+            player.Title = "Ivan";
+            player.Description = "Lazy";
 
-            player.Room = room;
-            hobo.Room = room;
+            var hobo = World.Instance.Create<GameObject>();
+            World.Instance.TryAdd<HoboIdleBehavior>(hobo);
+            hobo.Title = "Hobo";
+            hobo.Description = "Stinks";
 
+            World.Instance.Update();
+            World.Instance.Update();
+            World.Instance.Update();
             World.Instance.Update();
         }
     }

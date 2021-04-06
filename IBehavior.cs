@@ -2,6 +2,6 @@ namespace quest
 {
     interface IBehavior
     {
-        void Execute();
+        void Process(CommandArgs args);
     }
 }
