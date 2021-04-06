@@ -2,9 +2,9 @@ using System;
 
 namespace quest
 {
-    class HoboIdleBehavior : IBehavior
+    class HoboIdleBehavior : AliveBehavior
     {
-        public void Process(CommandArgs args)
+        public override void Process(CommandArgs args)
         {
             if (new Random().NextDouble() > 0.5f)
             {

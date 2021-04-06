@@ -2,9 +2,9 @@ using System;
 
 namespace quest
 {
-    class PlayerBehavior : IBehavior
+    class PlayerBehavior : AliveBehavior
     {
-        public void Process(CommandArgs args)
+        public override void Process(CommandArgs args)
         {
             string input = Console.ReadLine();
             World.Instance.Parse(args.Invoker, input);

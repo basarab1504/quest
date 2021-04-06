@@ -33,8 +33,8 @@ namespace quest
         {
             foreach (var item in alive)
             {
-                item.TryGet<PlayerBehavior>(out PlayerBehavior player);
-                player.Process(new CommandArgs()
+                item.TryGet<AliveBehavior>(out AliveBehavior alive);
+                alive.Process(new CommandArgs()
                 {
                     Invoker = item
                 });
@@ -64,7 +64,7 @@ namespace quest
                 behavior = new T();
                 behaviors.Add(behavior);
                 //Ужасно
-                if (behavior is PlayerBehavior)
+                if (behavior is AliveBehavior)
                     alive.Add(gameObject);
             }
             return gameObject.TryAdd<T>(behavior);
@@ -80,7 +80,7 @@ namespace quest
         public bool TryGet<T>(string name, out T gameObject) where T : GameObject
         {
             gameObject = (T)gameObjects.Find(x => x.Title == name);
-            return true;
+            return gameObject != null;
         }
     }
 }

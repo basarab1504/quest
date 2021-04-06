@@ -15,7 +15,13 @@ namespace quest
         {
             //упрощение
             string verb = input.Split()[0];
-            return commands.TryGetValue(verb, out command);
+            if (!commands.TryGetValue(verb, out command))
+            {
+                System.Console.WriteLine("Avaliable commands:");
+                foreach(var item in commands.Keys)
+                    System.Console.WriteLine($"- {item}");
+            }
+            return command != null;
         }
     }
 }
