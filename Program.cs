@@ -18,6 +18,7 @@
             var hobo = World.Instance.Create<GameObject>();
             World.Instance.TryAdd<SayBehavior>(hobo);
             World.Instance.TryAdd<HoboIdleBehavior>(hobo);
+            World.Instance.TryAdd<HoboHearingBehavior>(hobo);
             hobo.Title = "Hobo";
             hobo.Description = "Stinks";
 
