@@ -11,6 +11,7 @@
             var player = World.Instance.Create<GameObject>();
             World.Instance.TryAdd<PlayerBehavior>(player);
             World.Instance.TryAdd<SightBehavior>(player);
+            World.Instance.TryAdd<SayBehavior>(player);
             player.Title = "Ivan";
             player.Description = "Lazy";
 

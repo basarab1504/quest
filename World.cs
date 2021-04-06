@@ -27,6 +27,7 @@ namespace quest
         {
             parser = new CommandParser();
             parser.TryAddCommand("look", new LookCommand());
+            parser.TryAddCommand("say", new SayCommand());
         }
 
         public void Update()
