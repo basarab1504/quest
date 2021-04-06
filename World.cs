@@ -43,14 +43,14 @@ namespace quest
             while (commands.Count > 0)
             {
                 var command = commands.Dequeue();
-                command.Command.Execute(command.Invoker, command.FullCommand);
+                command.Command.Execute(command.Invoker, command.Args);
             }
         }
 
         public void Parse(GameObject invoker, string input)
         {
-            if (parser.TryParse(invoker, input, out ICommand command))
-                Push(new CommandData() { Invoker = invoker, Command = command, FullCommand = input });
+            if (parser.TryParse(invoker, input, out CommandData data))
+                Push(data);
         }
 
         public void Push(CommandData data)

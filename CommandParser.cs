@@ -11,16 +11,20 @@ namespace quest
             return commands.TryAdd(word, command);
         }
 
-        public bool TryParse(GameObject invoker, string input, out ICommand command)
+        public bool TryParse(GameObject invoker, string input, out CommandData data)
         {
             //упрощение
-            string verb = input.Split()[0];
-            if (!commands.TryGetValue(verb, out command))
+            var splitted = input.Split();
+            string verb = splitted[0];
+            data = new CommandData();
+            if (!commands.TryGetValue(verb, out ICommand command))
             {
                 System.Console.WriteLine("Avaliable commands:");
-                foreach(var item in commands.Keys)
+                foreach (var item in commands.Keys)
                     System.Console.WriteLine($"- {item}");
             }
+            else
+                data = new CommandData() { Invoker = invoker, Command = command, Args = input.Split()[1..splitted.Length] };
             return command != null;
         }
     }
