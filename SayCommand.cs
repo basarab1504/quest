@@ -6,13 +6,19 @@ namespace quest
         {
             if (invoker.TryGet<SayBehavior>(out SayBehavior behavior))
             {
-                string speakTo = args[1];
+                if (args.Length > 1)
+                {
+                    string speakTo = args[1];
+                    World.Instance.TryGet(speakTo, out GameObject gameObject);
+                    behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = gameObject, Message = args[0] });
 
-                World.Instance.TryGet(speakTo, out GameObject gameObject);
-                behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = gameObject, Message = args[0] });
-
-                if (gameObject != null && gameObject.TryGet<HearingBehavior>(out HearingBehavior hearingBehavior))
-                    hearingBehavior.Process(new HearCommandArgs() { Invoker = gameObject, From = invoker, Text = args[0] });
+                    if (gameObject != null && gameObject.TryGet<HearingBehavior>(out HearingBehavior hearingBehavior))
+                        hearingBehavior.Process(new HearCommandArgs() { Invoker = gameObject, From = invoker, Text = args[0] });
+                }
+                else
+                {
+                    behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = null, Message = args[0] });
+                }
             }
             else
                 System.Console.WriteLine($"{invoker.Title} can't speak.");

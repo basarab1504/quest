@@ -1,14 +1,11 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace quest
 {
     class World
     {
-        private List<IBehavior> behaviors = new List<IBehavior>();
         private List<GameObject> gameObjects = new List<GameObject>();
-        private List<GameObject> alive = new List<GameObject>();
+        private List<GameObject> updateables = new List<GameObject>();
         private Queue<CommandData> commands = new Queue<CommandData>();
         private CommandParser parser;
 
@@ -32,10 +29,10 @@ namespace quest
 
         public void Update()
         {
-            foreach (var item in alive)
+            foreach (var item in updateables)
             {
-                item.TryGet<AliveBehavior>(out AliveBehavior alive);
-                alive.Process(new CommandArgs()
+                item.TryGet<TickBehavior>(out TickBehavior updateable);
+                updateable.Process(new CommandArgs()
                 {
                     Invoker = item
                 });
@@ -63,10 +60,8 @@ namespace quest
             if (!gameObject.TryGet<T>(out T behavior))
             {
                 behavior = new T();
-                behaviors.Add(behavior);
-                //Ужасно
-                if (behavior is AliveBehavior)
-                    alive.Add(gameObject);
+                if (behavior is TickBehavior)
+                    updateables.Add(gameObject);
             }
             return gameObject.TryAdd<T>(behavior);
         }
