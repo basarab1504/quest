@@ -16,6 +16,7 @@
             player.Description = "Lazy";
 
             var hobo = World.Instance.Create<GameObject>();
+            World.Instance.TryAdd<SayBehavior>(hobo);
             World.Instance.TryAdd<HoboIdleBehavior>(hobo);
             hobo.Title = "Hobo";
             hobo.Description = "Stinks";
