@@ -5,7 +5,7 @@ namespace quest
         public void Process(CommandArgs args)
         {
             var castedArgs = (SayCommandArgs)args;
-            System.Console.WriteLine($"You said \"{castedArgs.Message}\" to {castedArgs.SayTo.Title}");
+            System.Console.WriteLine($"{args.Invoker.Title} said \"{castedArgs.Message}\" to {castedArgs.SayTo.Title}");
         }
     }
 }

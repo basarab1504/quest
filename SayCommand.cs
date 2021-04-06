@@ -14,10 +14,10 @@ namespace quest
                     behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = gameObject, Message = splitted[1] });
                 }
                 else
-                    System.Console.WriteLine($"You found no one to hear your words.");
+                    System.Console.WriteLine($"{invoker.Title} found no one to hear your words.");
             }
             else
-                System.Console.WriteLine("You can't speak.");
+                System.Console.WriteLine($"{invoker.Title} can't speak.");
         }
     }
 

@@ -12,10 +12,10 @@ namespace quest
                 if (World.Instance.TryGet(lookAt, out GameObject gameObject))
                     behavior.Process(new LookCommandArgs() { Invoker = invoker, LookAt = gameObject });
                 else
-                    System.Console.WriteLine("You look around but don't find what you are looking for.");
+                    System.Console.WriteLine($"{invoker.Title} look around but don't find what you are looking for.");
             }
             else
-                System.Console.WriteLine("You can't see.");
+                System.Console.WriteLine($"{invoker.Title} can't see.");
         }
     }
 

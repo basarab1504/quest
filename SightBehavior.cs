@@ -5,7 +5,7 @@ namespace quest
         public void Process(CommandArgs args)
         {
             var castedArgs = (LookCommandArgs)args;
-            System.Console.WriteLine(castedArgs.LookAt.Description);
+            System.Console.WriteLine($"{args.Invoker.Title} sees: {castedArgs.LookAt.Description}");
         }
     }
 }
