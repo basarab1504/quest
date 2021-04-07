@@ -8,11 +8,11 @@ namespace quest
             var castedArgs = (HearCommandArgs)args;
             if (willSpeakAgain)
             {
-                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), Args = new string[] { "Oi mate!", castedArgs.From.Title } });
+                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), FullCommand = $"say Hello! {castedArgs.From.Title}" });
                 willSpeakAgain = false;
             }
             else
-                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), Args = new string[] { "Leave me alone!", castedArgs.From.Title } });
+                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), FullCommand = $"say Leave me alone! {castedArgs.From.Title}" });
         }
     }
 }

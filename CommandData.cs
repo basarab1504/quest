@@ -4,6 +4,6 @@ namespace quest
     {
         public GameObject Invoker { get; set; }
         public ICommand Command { get; set; }
-        public string[] Args { get; set; }
+        public string FullCommand { get; set; }
     }
 }

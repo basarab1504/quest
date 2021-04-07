@@ -8,7 +8,7 @@ namespace quest
         {
             // if (new Random().NextDouble() > 0.5f)
             // {
-                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), Args = new string[] { "*sigh* Damn it's cold today." } });
+                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), FullCommand = "say *sigh* Damn it's cold today." });
             // }
         }
     }

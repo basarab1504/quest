@@ -2,11 +2,12 @@ namespace quest
 {
     class LookCommand : ICommand
     {
-        public void Execute(GameObject invoker, string[] args)
+        public void Execute(GameObject invoker, string fullcommand)
         {
             if (invoker.TryGet<SightBehavior>(out SightBehavior behavior))
             {
-                string lookAt = args[0];
+                var splitted = fullcommand.Split();
+                string lookAt = splitted[splitted.Length - 1];
 
                 if (World.Instance.TryGet(lookAt, out GameObject gameObject))
                     behavior.Process(new LookCommandArgs() { Invoker = invoker, LookAt = gameObject });

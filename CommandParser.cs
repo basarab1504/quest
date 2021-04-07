@@ -24,7 +24,7 @@ namespace quest
                     System.Console.WriteLine($"- {item}");
             }
             else
-                data = new CommandData() { Invoker = invoker, Command = command, Args = input.Split()[1..splitted.Length] };
+                data = new CommandData() { Invoker = invoker, Command = command, FullCommand = input };
             return command != null;
         }
     }
