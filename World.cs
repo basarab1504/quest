@@ -40,7 +40,7 @@ namespace quest
             while (commands.Count > 0)
             {
                 var command = commands.Dequeue();
-                command.Command.Execute(command.Invoker, command.FullCommand);
+                command.Command.Execute(command.Args);
             }
         }
 

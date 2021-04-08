@@ -2,6 +2,6 @@ namespace quest
 {
     interface ICommand
     {
-        void Execute(GameObject invoker, string fullcommand);
+        void Execute(CommandArgs args);
     }
 }

@@ -15,8 +15,9 @@ namespace quest
         {
             //упрощение
             var splitted = input.Split();
-            string verb = splitted[0];
             data = new CommandData();
+
+            string verb = splitted[0];
             if (!commands.TryGetValue(verb, out ICommand command))
             {
                 System.Console.WriteLine("Avaliable commands:");
@@ -24,7 +25,18 @@ namespace quest
                     System.Console.WriteLine($"- {item}");
             }
             else
-                data = new CommandData() { Invoker = invoker, Command = command, FullCommand = input };
+            {
+                data.Command = command;
+            }
+
+            data.Args = new CommandArgs();
+            data.Args.Invoker = invoker;
+            if (splitted.Length > 3 && World.Instance.TryGet<GameObject>(splitted[splitted.Length - 1], out GameObject gameObject))
+            {
+                data.Args.ToInteract = gameObject;
+                data.Args.Message = string.Join(' ', splitted[1..(splitted.Length - 1)]);
+            }
+            
             return command != null;
         }
     }

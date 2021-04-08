@@ -4,11 +4,10 @@ namespace quest
     {
         public void Process(CommandArgs args)
         {
-            var castedArgs = (SayCommandArgs)args;
-            if (castedArgs.SayTo == null)
-                System.Console.WriteLine($"{args.Invoker.Title} said \"{castedArgs.Message}\"");
+            if (args.ToInteract == null)
+                System.Console.WriteLine($"{args.Invoker.Title} said \"{args.Message}\"");
             else
-                System.Console.WriteLine($"{args.Invoker.Title} said \"{castedArgs.Message}\" to {castedArgs.SayTo.Title}");
+                System.Console.WriteLine($"{args.Invoker.Title} said \"{args.Message}\" to {args.ToInteract.Title}");
         }
     }
 }

@@ -6,10 +6,11 @@ namespace quest
     {
         public override void Process(CommandArgs args)
         {
-            // if (new Random().NextDouble() > 0.5f)
-            // {
-                World.Instance.Push(new CommandData() { Invoker = args.Invoker, Command = new SayCommand(), FullCommand = "say *sigh* Damn it's cold today." });
-            // }
+            World.Instance.Push(new CommandData()
+            {
+                Command = new SayCommand(),
+                Args = new CommandArgs() { Invoker = args.Invoker, Message = "Damn it's cold. *sigh*" }
+            });
         }
     }
 }

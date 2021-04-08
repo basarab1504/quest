@@ -1,44 +1,30 @@
-using System.Text.RegularExpressions;
-
 namespace quest
 {
-    class SayCommand : ICommand
+    class GiveCommand : ICommand
     {
-        public void Execute(GameObject invoker, string fullcommand)
+        public void Execute(CommandArgs args)
         {
-            if (invoker.TryGet<SayBehavior>(out SayBehavior behavior))
+            if (args.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior)
+                && args.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior toBehavior)
+                && World.Instance.TryGet<GameObject>(args.Message, out GameObject gameObject))
             {
-                var splitted = fullcommand.Split();
-
-                if (splitted.Length > 2)
-                {
-                    string speakTo = splitted[splitted.Length - 1];
-
-                    World.Instance.TryGet(speakTo, out GameObject gameObject);
-
-                    if (gameObject != null)
-                    {
-                        if (gameObject.TryGet<HearingBehavior>(out HearingBehavior hearingBehavior))
-                            hearingBehavior.Process(new HearCommandArgs() { Invoker = gameObject, From = invoker, Text = string.Join(' ', splitted[1..(splitted.Length - 2)]) });
-                        behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = gameObject, Message = string.Join(' ', splitted[1..(splitted.Length - 1)]) });
-                    }
-                    else
-                        behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = gameObject, Message = string.Join(' ', splitted[1..(splitted.Length)]) });
-                }
-                else
-                {
-                    behavior.Process(new SayCommandArgs() { Invoker = invoker, SayTo = null, Message = string.Join(' ', splitted[1..(splitted.Length)]) });
-                }
 
             }
-            else
-                System.Console.WriteLine($"{invoker.Title} can't speak.");
         }
     }
 
-    class SayCommandArgs : CommandArgs
+    class SayCommand : ICommand
     {
-        public GameObject SayTo { get; set; }
-        public string Message { get; set; }
+        public void Execute(CommandArgs args)
+        {
+            if (args.Invoker.TryGet<SayBehavior>(out SayBehavior behavior))
+            {
+                if (args.ToInteract != null && args.ToInteract.TryGet<HearingBehavior>(out HearingBehavior hearingBehavior))
+                    hearingBehavior.Process(new HearCommandArgs() { Invoker = args.ToInteract, From = args.Invoker, Text = args.Message });
+                behavior.Process(args);
+            }
+            else
+                System.Console.WriteLine($"{args.Invoker.Title} can't speak.");
+        }
     }
 }
