@@ -12,6 +12,15 @@ namespace quest
             else
                 System.Console.WriteLine($"{args.Invoker.Title} can't see.");
         }
+
+        public CommandArgs Parse(string fullCommand)
+        {
+            var splitted = fullCommand.Split();
+            
+            World.Instance.TryGet<GameObject>(splitted[splitted.Length - 1], out GameObject gameObject);
+
+            return new LookCommandArgs() { LookAt = gameObject };
+        }
     }
 
     class LookCommandArgs : CommandArgs

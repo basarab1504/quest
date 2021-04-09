@@ -9,7 +9,7 @@ namespace quest
             World.Instance.Push(new CommandData()
             {
                 Command = new SayCommand(),
-                Args = new CommandArgs() { Invoker = args.Invoker, Message = "Damn it's cold. *sigh*" }
+                Args = new SayCommandArgs() { Invoker = args.Invoker, Message = "Damn it's cold. *sigh*" }
             });
         }
     }

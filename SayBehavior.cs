@@ -4,10 +4,12 @@ namespace quest
     {
         public void Process(CommandArgs args)
         {
-            if (args.ToInteract == null)
-                System.Console.WriteLine($"{args.Invoker.Title} said \"{args.Message}\"");
-            else
-                System.Console.WriteLine($"{args.Invoker.Title} said \"{args.Message}\" to {args.ToInteract.Title}");
+            var castedArgs = (SayCommandArgs)args;
+            if (castedArgs.SpeakWith != null)
+            {
+                World.Instance.Push(new CommandData() { Command = new HearCommand(), Args = new HearCommandArgs() { Invoker = castedArgs.SpeakWith, From = castedArgs.Invoker, Message = castedArgs.Message } });
+                // System.Console.WriteLine($"{args.Invoker.Title} said \"{castedArgs.Message}\" to {castedArgs.SpeakWith.Title}");
+            }
         }
     }
 }

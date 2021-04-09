@@ -11,16 +11,25 @@ namespace quest
                 World.Instance.Push(new CommandData()
                 {
                     Command = new SayCommand(),
-                    Args = new CommandArgs() { Invoker = castedArgs.Invoker, ToInteract = castedArgs.From, Message = "Hello there!" }
+                    Args = new SayCommandArgs() { Invoker = castedArgs.Invoker, SpeakWith = castedArgs.From, Message = "Hello there!" }
                 });
+
+                // World.Instance.Push(new CommandData()
+                // {
+                //     Command = new GiveCommand(),
+                //     Args = new GiveCommandArgs() { Invoker = castedArgs.Invoker, From = castedArgs.From, Items =  }
+                // });
+
                 willSpeakAgain = false;
             }
             else
+            {
                 World.Instance.Push(new CommandData()
                 {
                     Command = new SayCommand(),
-                    Args = new CommandArgs() { Invoker = castedArgs.Invoker, ToInteract = castedArgs.From, Message = "Get off, punk." }
+                    Args = new SayCommandArgs() { Invoker = castedArgs.Invoker, SpeakWith = castedArgs.From, Message = "Get off, punk." }
                 });
+            }
         }
     }
 }

@@ -11,16 +11,17 @@
             var player = World.Instance.Create<GameObject>();
             World.Instance.TryAdd<PlayerBehavior>(player);
             World.Instance.TryAdd<SightBehavior>(player);
+            World.Instance.TryAdd<PlayerHearingBehavior>(player);
             World.Instance.TryAdd<SayBehavior>(player);
             player.Title = "Ivan";
-            player.Description = "Lazy";
+            player.Description = "Ugly traveler";
 
             var hobo = World.Instance.Create<GameObject>();
             World.Instance.TryAdd<SayBehavior>(hobo);
             World.Instance.TryAdd<HoboIdleBehavior>(hobo);
             World.Instance.TryAdd<HoboHearingBehavior>(hobo);
             hobo.Title = "Hobo";
-            hobo.Description = "Stinks";
+            hobo.Description = "Handsome homeless man";
 
             World.Instance.Update();
             World.Instance.Update();

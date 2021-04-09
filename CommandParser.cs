@@ -27,16 +27,9 @@ namespace quest
             else
             {
                 data.Command = command;
+                data.Args = command.Parse(input);
+                data.Args.Invoker = invoker;
             }
-
-            data.Args = new CommandArgs();
-            data.Args.Invoker = invoker;
-            if (splitted.Length > 3 && World.Instance.TryGet<GameObject>(splitted[splitted.Length - 1], out GameObject gameObject))
-            {
-                data.Args.ToInteract = gameObject;
-                data.Args.Message = string.Join(' ', splitted[1..(splitted.Length - 1)]);
-            }
-            
             return command != null;
         }
     }
