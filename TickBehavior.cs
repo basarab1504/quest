@@ -1,6 +1,6 @@
 namespace quest
 {
-    abstract class TickBehavior : IBehavior
+    abstract class TickBehavior : IProcessableBehavior
     {
         public abstract void Process(CommandArgs args);
     }

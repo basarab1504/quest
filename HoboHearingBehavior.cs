@@ -14,10 +14,14 @@ namespace quest
                     Args = new SayCommandArgs() { Invoker = castedArgs.Invoker, SpeakWith = castedArgs.From, Message = "Hello there!" }
                 });
 
+                World.Instance.Parse(args.Invoker, $"give Amulet {castedArgs.From.Title}");
+
+                World.Instance.Parse(args.Invoker, $"give 100 gold {castedArgs.From.Title}");
+                
                 // World.Instance.Push(new CommandData()
                 // {
                 //     Command = new GiveCommand(),
-                //     Args = new GiveCommandArgs() { Invoker = castedArgs.Invoker, From = castedArgs.From, Items =  }
+                //     Args = new GiveCommandArgs() { Invoker = castedArgs.Invoker, GiveTo = castedArgs.From, Items =  }
                 // });
 
                 willSpeakAgain = false;

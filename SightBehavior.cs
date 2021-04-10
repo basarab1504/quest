@@ -1,6 +1,6 @@
 namespace quest
 {
-    class SightBehavior : IBehavior
+    class SightBehavior : IProcessableBehavior
     {
         public void Process(CommandArgs args)
         {

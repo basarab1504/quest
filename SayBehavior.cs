@@ -1,6 +1,6 @@
 namespace quest
 {
-    class SayBehavior : IBehavior
+    class SayBehavior : IProcessableBehavior
     {
         public void Process(CommandArgs args)
         {

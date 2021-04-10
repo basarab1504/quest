@@ -1,30 +1,54 @@
-// namespace quest
-// {
+using System.Collections.Generic;
 
-//     class GiveCommand : ICommand
-//     {
-//         public void Execute(CommandArgs args)
-//         {
-//             var castedArgs = (GiveCommandArgs)args;
-//             if (args.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior)
-//                 && args.ToInteract.TryGet<InventoryBehavior>(out InventoryBehavior toBehavior))
-//             {
-//                 toBehavior.Process(new GiveCommandArgs() { Invoker = castedArgs.Invoker, ToInteract = castedArgs.ToInteract, Items = castedArgs.Items });
-//             }
-//         }
+namespace quest
+{
 
-//         public CommandArgs Parse(string fullCommand)
-//         {
-//             var splitted = fullCommand.Split();
+    class GiveCommand : ICommand
+    {
+        public void Execute(CommandArgs args)
+        {
+            var castedArgs = (GiveCommandArgs)args;
+            if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior))
+            {
+                List<string> strings = new List<string>(castedArgs.Items.Count);
+                
+                foreach (var item in castedArgs.Items)
+                {
+                    strings.Add(item.Title);
+                    invokerBehavior.Remove(item);
+                }
+                
+                System.Console.WriteLine($"{castedArgs.Invoker.Title} gave {string.Join(' ', strings)} to {castedArgs.GiveTo.Title}");
 
-//             World.Instance.TryGet<GameObject>(splitted[splitted.Length - 1], out GameObject gameObject);
+                World.Instance.Push(new CommandData()
+                {
+                    Command = new TakeCommand(),
+                    Args = new TakeCommandArgs() { Invoker = castedArgs.GiveTo, TakeFrom = castedArgs.Invoker, Items = castedArgs.Items }
+                });
+            }
+        }
 
-//             return new LookCommandArgs() { LookAt = gameObject };
-//         }
-//     }
+        public CommandArgs Parse(string fullCommand)
+        {
+            var splitted = fullCommand.Split();
 
-//     class GiveCommandArgs : CommandArgs
-//     {
-//         public GameObject[] Items { get; set; }
-//     }
-// }
+            var items = new List<GameObject>();
+
+            foreach (var item in splitted[1..(splitted.Length - 1)])
+            {
+                if (World.Instance.TryGet<GameObject>(item, out GameObject foundObj))
+                    items.Add(foundObj);
+            }
+
+            World.Instance.TryGet<GameObject>(splitted[splitted.Length - 1], out GameObject gameObject);
+
+            return new GiveCommandArgs() { GiveTo = gameObject, Items = items };
+        }
+    }
+
+    class GiveCommandArgs : CommandArgs
+    {
+        public GameObject GiveTo { get; set; }
+        public IList<GameObject> Items { get; set; }
+    }
+}

@@ -11,7 +11,7 @@ namespace quest
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public bool TryAdd<T>(IBehavior behavior) where T : IBehavior
+        public bool TryAdd<T>(T behavior) where T : IBehavior
         {
             behaviors.Add(behavior);
             return true;
