@@ -27,6 +27,7 @@ namespace quest
             parser.TryAddCommand("say", new SayCommand());
             parser.TryAddCommand("give", new GiveCommand());
             parser.TryAddCommand("take", new TakeCommand());
+            parser.TryAddCommand("transfer", new TransferMoneyCommand());
         }
 
         public void Update()

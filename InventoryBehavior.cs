@@ -5,6 +5,7 @@ namespace quest
     class InventoryBehavior : IBehavior
     {
         private List<GameObject> items = new List<GameObject>();
+        public int Gold { get; set; }
         
         public void Add(GameObject gameObject)
         {

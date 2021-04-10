@@ -15,9 +15,8 @@ namespace quest
                 });
 
                 World.Instance.Parse(args.Invoker, $"give Amulet {castedArgs.From.Title}");
+                World.Instance.Parse(args.Invoker, $"transfer 100 {castedArgs.From.Title}");
 
-                World.Instance.Parse(args.Invoker, $"give 100 gold {castedArgs.From.Title}");
-                
                 // World.Instance.Push(new CommandData()
                 // {
                 //     Command = new GiveCommand(),
