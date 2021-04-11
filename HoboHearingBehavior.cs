@@ -15,13 +15,12 @@ namespace quest
                 });
 
                 World.Instance.Parse(args.Invoker, $"give Amulet {castedArgs.From.Title}");
-                World.Instance.Parse(args.Invoker, $"transfer 100 {castedArgs.From.Title}");
 
-                // World.Instance.Push(new CommandData()
-                // {
-                //     Command = new GiveCommand(),
-                //     Args = new GiveCommandArgs() { Invoker = castedArgs.Invoker, GiveTo = castedArgs.From, Items =  }
-                // });
+                World.Instance.Push(new CommandData()
+                {
+                    Command = new TransferMoneyCommand(),
+                    Args = new TransferMoneyCommandArgs() { Invoker = castedArgs.Invoker, TransferTo = castedArgs.From, Amount = 100 }
+                });
 
                 willSpeakAgain = false;
             }

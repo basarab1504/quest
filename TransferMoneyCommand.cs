@@ -9,7 +9,7 @@ namespace quest
             if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior behavior)
             && castedArgs.TransferTo.TryGet<InventoryBehavior>(out InventoryBehavior behavior1))
             {
-                if (behavior.Gold <= castedArgs.Amount)
+                if (behavior.Gold >= castedArgs.Amount)
                 {
                     behavior.Gold -= castedArgs.Amount;
                     behavior1.Gold += castedArgs.Amount;

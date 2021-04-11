@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace quest
@@ -20,10 +18,13 @@ namespace quest
         public bool TryGet<T>(out T behavior) where T : IBehavior
         {
             behavior = default(T);
-            if (behaviors.OfType<T>().Count() > 0)
+            foreach (var item in behaviors)
             {
-                behavior = (T)behaviors.First(x => x is T);
-                return true;
+                if (item is T)
+                {
+                    behavior = (T)item;
+                    return true;
+                }
             }
             return false;
         }

@@ -31,6 +31,7 @@
 
             hobo.TryGet<InventoryBehavior>(out InventoryBehavior behavior);
             behavior.Add(amulet);
+            behavior.Gold = 100;
 
             World.Instance.Update();
             World.Instance.Update();

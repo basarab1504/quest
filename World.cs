@@ -34,7 +34,7 @@ namespace quest
         {
             foreach (var item in updateables)
             {
-                item.TryGet<TickBehavior>(out TickBehavior updateable);
+                item.TryGet<AliveBehavior>(out AliveBehavior updateable);
                 updateable.Process(new CommandArgs()
                 {
                     Invoker = item
@@ -63,7 +63,7 @@ namespace quest
             if (!gameObject.TryGet<T>(out T behavior))
             {
                 behavior = new T();
-                if (behavior is TickBehavior)
+                if (behavior is AliveBehavior)
                     updateables.Add(gameObject);
             }
             return gameObject.TryAdd<T>(behavior);

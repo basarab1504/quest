@@ -2,7 +2,7 @@ using System;
 
 namespace quest
 {
-    class PlayerBehavior : TickBehavior
+    class PlayerBehavior : AliveBehavior
     {
         public override void Process(CommandArgs args)
         {

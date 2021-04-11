@@ -8,16 +8,23 @@ namespace quest
         public void Execute(CommandArgs args)
         {
             var castedArgs = (GiveCommandArgs)args;
+
+            if (castedArgs.Items.Count == 0)
+            {
+                System.Console.WriteLine($"{castedArgs.Invoker.Title} don't have these items");
+                return;
+            }
+
             if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior))
             {
                 List<string> strings = new List<string>(castedArgs.Items.Count);
-                
+
                 foreach (var item in castedArgs.Items)
                 {
                     strings.Add(item.Title);
                     invokerBehavior.Remove(item);
                 }
-                
+
                 System.Console.WriteLine($"{castedArgs.Invoker.Title} gave {string.Join(' ', strings)} to {castedArgs.GiveTo.Title}");
 
                 World.Instance.Push(new CommandData()
