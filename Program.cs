@@ -30,9 +30,14 @@
             behavior.Add(amulet);
             behavior.Gold = 100;
 
-            var room = new Room() { Title = "Road", Description = "Old town road"};
+            var sword = World.Instance.Create<GameObject>();
+            sword.Title = "Sword";
+            sword.Description = "Rusty sword";
+
+            var room = new Room() { Title = "Road", Description = "Old town road" };
             room.Add(player);
             room.Add(hobo);
+            room.Add(sword);
 
             World.Instance.AddRoom(room);
 
