@@ -2,8 +2,15 @@ namespace quest
 {
     class HearCommand : ICommand
     {
+        public string Pattern => "not implemented yet ;]";
+
         public void Execute(CommandArgs args)
         {
+            var castedArgs = (HearCommandArgs)args;
+            
+            if (castedArgs.From == null)
+                return;
+
             if (args.Invoker.TryGet<HearingBehavior>(out HearingBehavior hearingBehavior))
                 hearingBehavior.Process(args);
             else

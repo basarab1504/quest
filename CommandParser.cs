@@ -20,9 +20,9 @@ namespace quest
             string verb = splitted[0];
             if (!commands.TryGetValue(verb, out ICommand command))
             {
-                System.Console.WriteLine("Avaliable commands:");
-                foreach (var item in commands.Keys)
-                    System.Console.WriteLine($"- {item}");
+                System.Console.WriteLine("Incorrect command. Please try again.\nWarning: case sensitive!\nAvaliable commands:");
+                foreach (var item in commands)
+                    System.Console.WriteLine($"- {item.Key}. {item.Value.Pattern}");
             }
             else
             {

@@ -4,9 +4,6 @@
     {
         static void Main(string[] args)
         {
-            var room = World.Instance.Create<GameObject>();
-            room.Title = "Road";
-            room.Description = "Dustry old road";
 
             var player = World.Instance.Create<GameObject>();
             World.Instance.TryAdd<PlayerBehavior>(player);
@@ -32,6 +29,12 @@
             hobo.TryGet<InventoryBehavior>(out InventoryBehavior behavior);
             behavior.Add(amulet);
             behavior.Gold = 100;
+
+            var room = new Room() { Title = "Road", Description = "Old town road"};
+            room.Add(player);
+            room.Add(hobo);
+
+            World.Instance.AddRoom(room);
 
             World.Instance.Update();
             World.Instance.Update();

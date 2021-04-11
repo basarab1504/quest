@@ -4,6 +4,7 @@ namespace quest
 {
     class World
     {
+        private List<Room> rooms = new List<Room>();
         private List<GameObject> gameObjects = new List<GameObject>();
         private List<GameObject> updateables = new List<GameObject>();
         private Queue<CommandData> commands = new Queue<CommandData>();
@@ -28,6 +29,7 @@ namespace quest
             parser.TryAddCommand("give", new GiveCommand());
             parser.TryAddCommand("take", new TakeCommand());
             parser.TryAddCommand("transfer", new TransferMoneyCommand());
+            parser.TryAddCommand("location", new WhereAmICommand());
         }
 
         public void Update()
@@ -67,6 +69,11 @@ namespace quest
                     updateables.Add(gameObject);
             }
             return gameObject.TryAdd<T>(behavior);
+        }
+
+        public void AddRoom(Room room)
+        {
+            rooms.Add(room);
         }
 
         public T Create<T>() where T : GameObject, new()

@@ -2,6 +2,8 @@ namespace quest
 {
     class TransferMoneyCommand : ICommand
     {
+        public string Pattern => "*command* *amount* *reciever*";
+
         public void Execute(CommandArgs args)
         {
             var castedArgs = (TransferMoneyCommandArgs)args;

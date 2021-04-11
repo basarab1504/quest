@@ -5,9 +5,14 @@ namespace quest
 
     class GiveCommand : ICommand
     {
+        public string Pattern => "*command* *item1* *item2* ...*itemN* *reciever*";
+
         public void Execute(CommandArgs args)
         {
             var castedArgs = (GiveCommandArgs)args;
+
+            if (castedArgs.GiveTo == null)
+                return;
 
             if (castedArgs.Items.Count == 0)
             {
@@ -15,7 +20,8 @@ namespace quest
                 return;
             }
 
-            if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior))
+            if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior)
+                && castedArgs.GiveTo.TryGet<InventoryBehavior>(out InventoryBehavior recieverBehavior))
             {
                 List<string> strings = new List<string>(castedArgs.Items.Count);
 
@@ -23,15 +29,16 @@ namespace quest
                 {
                     strings.Add(item.Title);
                     invokerBehavior.Remove(item);
+                    recieverBehavior.Add(item);
                 }
 
                 System.Console.WriteLine($"{castedArgs.Invoker.Title} gave {string.Join(' ', strings)} to {castedArgs.GiveTo.Title}");
 
-                World.Instance.Push(new CommandData()
-                {
-                    Command = new TakeCommand(),
-                    Args = new TakeCommandArgs() { Invoker = castedArgs.GiveTo, TakeFrom = castedArgs.Invoker, Items = castedArgs.Items }
-                });
+                // World.Instance.Push(new CommandData()
+                // {
+                //     Command = new TakeCommand(),
+                //     Args = new TakeCommandArgs() { Invoker = castedArgs.GiveTo, TakeFrom = castedArgs.Invoker, Items = castedArgs.Items }
+                // });
             }
         }
 

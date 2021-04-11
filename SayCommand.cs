@@ -2,11 +2,19 @@ namespace quest
 {
     class SayCommand : ICommand
     {
+        public string Pattern => "*command* *message* *reciever*";
+
         public void Execute(CommandArgs args)
         {
             var castedArgs = (SayCommandArgs)args;
+
+            if(castedArgs.SpeakWith == null)
+                return;
+
             if (args.Invoker.TryGet<SayBehavior>(out SayBehavior behavior))
+            {
                 behavior.Process(args);
+            }
             else
                 System.Console.WriteLine($"{args.Invoker.Title} can't speak.");
         }

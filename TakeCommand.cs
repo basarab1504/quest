@@ -2,18 +2,26 @@ using System.Collections.Generic;
 
 namespace quest
 {
+
     class TakeCommand : ICommand
     {
+        public string Pattern => "*command* *item1* *item2* ...*itemN*";
+
         public void Execute(CommandArgs args)
         {
             var castedArgs = (TakeCommandArgs)args;
+
             if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior invokerBehavior))
             {
                 List<string> strings = new List<string>(castedArgs.Items.Count);
                 foreach (var item in castedArgs.Items)
                 {
-                    strings.Add(item.Title);
-                    invokerBehavior.Remove(item);
+                    if (castedArgs.Invoker.Room.Contains(item))
+                    {
+                        strings.Add(item.Title);
+                        invokerBehavior.Remove(item);
+                        item.Room = castedArgs.Invoker.Room;
+                    }
                 }
                 System.Console.WriteLine($"{castedArgs.Invoker.Title} took {string.Join(' ', strings)} from {castedArgs.TakeFrom.Title}");
             }

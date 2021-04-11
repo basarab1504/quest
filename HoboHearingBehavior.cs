@@ -14,7 +14,17 @@ namespace quest
                     Args = new SayCommandArgs() { Invoker = castedArgs.Invoker, SpeakWith = castedArgs.From, Message = "Hello there!" }
                 });
 
-                World.Instance.Parse(args.Invoker, $"give Amulet {castedArgs.From.Title}");
+                if (castedArgs.Invoker.TryGet<InventoryBehavior>(out InventoryBehavior behavior))
+                {
+                    if (behavior.TryFind(x => x.Title == "Amulet", out GameObject item))
+                    {
+                        World.Instance.Push(new CommandData()
+                        {
+                            Command = new GiveCommand(),
+                            Args = new GiveCommandArgs() { Invoker = castedArgs.Invoker, GiveTo = castedArgs.From, Items = new GameObject[] { item } }
+                        });
+                    }
+                }
 
                 World.Instance.Push(new CommandData()
                 {
